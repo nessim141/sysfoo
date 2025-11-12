@@ -1,7 +1,13 @@
 pipeline {
-  agent any
+  agent none
   stages {
     stage('Build') {
+      agent {
+        docker {
+          image 'maven:3.9.6-eclipse-temurin-17-alpine'
+        }
+
+      }
       steps {
         echo 'Compiling sysfo app'
         sh 'mvn compile'
@@ -9,6 +15,12 @@ pipeline {
     }
 
     stage('test') {
+      agent {
+        docker {
+          image 'maven:3.9.6-eclipse-temurin-17-alpine'
+        }
+
+      }
       steps {
         echo 'runnig unit test..'
         sh 'mvn clean test'
